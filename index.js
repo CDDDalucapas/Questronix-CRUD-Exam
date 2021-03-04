@@ -38,6 +38,26 @@ app.post('/items', (req, res) =>{
         }
     )
 })
+app.put('/items/:id', (req, res) =>{
+    db.query(
+        'UPDATE items '+
+        'SET name= "'+req.body.name+'", qty= '+req.body.qty+', amount= '+req.body.amount +
+        ' WHERE id = '+req.params.id,
+        (error, results, fields) => {
+            if (error) {
+                console.log(error)
+                return
+            }
+            const item = {
+                id: parseInt(req.params.id),
+                name: req.body.name,
+                qty: req.body.qty,
+                amount: req.body.amount
+            }
+            res.status(200).send(item);
+        }
+    )
+})
 app.listen(3000, () => {
     console.log('Server running on localhost:3000')
 })
