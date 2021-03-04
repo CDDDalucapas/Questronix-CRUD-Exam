@@ -58,6 +58,13 @@ app.put('/items/:id', (req, res) =>{
         }
     )
 })
+app.delete('/items/:id', (req, res) =>{
+    db.query(
+        'DELETE FROM items ' +
+        'WHERE id = '+req.params.id+''
+    )
+    res.status(200).send('This id = '+req.params.id+' is Deleted')
+})
 app.listen(3000, () => {
     console.log('Server running on localhost:3000')
 })
