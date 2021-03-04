@@ -6,28 +6,17 @@ const bodyParser = require('body-parser')
 //for req json format
 app.use(bodyParser.json())
 
-app.get('/sampleitems', (req, res) =>{
-    res.status(200).send(
-        [
-            {
-                id:1,
-                name:'qeuk',
-                qty:50,
-                amount:1000
-            },
-            {
-                id:2,
-                name:'bola',
-                qty:23,
-                amount:5400
-            },
-            {
-                id:3,
-                name:'britsle',
-                qty:4,
-                amount:310
-            }
-        ]
+app.get('/items', (req, res) =>{
+    db.query(
+        'SELECT * from items'
+        ,
+        (error, results, fields) => {
+          if (error) {
+            console.log(error)
+            return
+          }
+          res.status(200).send(results);
+        }
     )
 })
 
