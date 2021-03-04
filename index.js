@@ -19,7 +19,25 @@ app.get('/items', (req, res) =>{
         }
     )
 })
-
+app.post('/items', (req, res) =>{
+    db.query(
+        'INSERT INTO items (name, qty, amount)'+
+        'VALUE ("'+req.body.name+'",'+req.body.qty+','+req.body.amount+')',
+        (error, results, fields) => {
+            if (error) {
+                console.log(error)
+                return
+            }
+            const item = {
+                id: results.insertId,
+                name: req.body.name,
+                qty: req.body.qty,
+                amount: req.body.amount
+            }
+            res.status(200).send(item);
+        }
+    )
+})
 app.listen(3000, () => {
     console.log('Server running on localhost:3000')
 })
